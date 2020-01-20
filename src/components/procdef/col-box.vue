@@ -22,6 +22,8 @@
       :node="item"
       @addnode="addnode"
       @delNode="delNode(item)"
+      @delConditionNode="delConditionNode"
+      @addConditionFactor="addConditionFactor"
     />
   </div>
 </template>
@@ -67,6 +69,7 @@ export default {
   },
   methods: {
     getData (data) {
+      this.items = []
       iteratorData(this.items, data)
     },
     addnode (node) {

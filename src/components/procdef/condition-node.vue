@@ -2,8 +2,10 @@
   <div class="condition-node">
     <ConditionNodeBox
       :node="node"
+      @addnode="addnode"
       @delConditionNode="delConditionNode"
       @addConditionFactor="addConditionFactor"
+      @updateCondition="updateCondition"
     />
   </div>
 </template>
@@ -37,6 +39,9 @@ export default {
     },
     addConditionFactor (node) {
       this.$emit('addConditionFactor', node)
+    },
+    updateCondition (node) {
+      this.$emit('updateCondition', node)
     }
   }
 }

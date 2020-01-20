@@ -13,7 +13,10 @@
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "vue": "^2.6.10"
+    "node-sass": "^4.13.1",
+    "sass-loader": "^8.0.2",
+    "vue": "^2.6.10",
+    "vue-json-pretty": "^1.6.3"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.1.0",

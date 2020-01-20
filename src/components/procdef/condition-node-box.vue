@@ -5,50 +5,124 @@
         &lt;
       </div><div class="title-wrapper">
         <span
+          style="float:right;color: grey;"
+          @click="delConditionNode"
+        >X</span>
+        <span
           class="editable-title"
           data-spm-anchor-id="0.0.0.i35.2f244490ZxXSWD"
-        >条件2</span><span class="priority-title">优先级2</span><i
-          aria-label="icon: close"
-          tabindex="-1"
-          class="anticon anticon-close close"
-        ><svg
-          viewBox="64 64 896 896"
-          focusable="false"
-          class=""
-          data-icon="close"
-          width="1em"
-          height="1em"
-          fill="currentColor"
-          aria-hidden="true"
-          data-spm-anchor-id="0.0.0.i34.2f244490ZxXSWD"
-        ><path d="M563.8 512l262.5-312.9c4.4-5.2.7-13.1-6.1-13.1h-79.8c-4.7 0-9.2 2.1-12.3 5.7L511.6 449.8 295.1 191.7c-3-3.6-7.5-5.7-12.3-5.7H203c-6.8 0-10.5 7.9-6.1 13.1L459.4 512 196.9 824.9A7.95 7.95 0 0 0 203 838h79.8c4.7 0 9.2-2.1 12.3-5.7l216.5-258.1 216.5 258.1c3 3.6 7.5 5.7 12.3 5.7h79.8c6.8 0 10.5-7.9 6.1-13.1L563.8 512z" /></svg></i>
-      </div><div class="content">
-        <div>住宿费（元） ≤ 100 并且 餐饮费（元） ≤ 100</div>
+        >{{ node.name }}</span>
+      </div>
+      <div
+        class="content"
+        @click="setProperties"
+      >
+        <div>{{ text1 }}</div>
       </div>
     </div>
     <AddNodeBtn
       :node="node"
       @addnode="addnode"
     />
+    <AddNodeCondition
+      :show.sync="show"
+      :properties="node.properties"
+      @on-success="setPropertiesOK"
+    />
   </div>
 </template>
 <script>
 import AddNodeBtn from './add-node-btn'
+import AddNodeCondition from './add-node-condition'
 export default {
   components: {
-    AddNodeBtn
+    AddNodeBtn,
+    AddNodeCondition
   },
   props: {
+    text: {
+      type: String,
+      default: '请设置条件'
+    },
     node: {
       type: Object,
       default: undefined
     }
   },
   data: () => ({
+    show: false,
+    text1: ''
   }),
+  mounted () {
+    this.text1 = this.getText()
+    if (!this.node.properties) {
+      this.node.properties = {
+        conditions: [[]]
+      }
+    }
+  },
   methods: {
-    addnode (node) {
-      this.$emit('addnode', node)
+    addnode () {
+      this.$emit('addnode')
+    },
+    delConditionNode () {
+      this.$emit('delConditionNode')
+    },
+    setProperties () {
+      this.show = true
+    },
+    setPropertiesOK (properties) {
+      this.node.properties = properties
+      this.$emit('addConditionFactor', this.node)
+      // this.text1.set(this.getText())
+      this.text1 = this.getText()
+    },
+    getText () {
+      var text = '请设置条件'
+      if (!this.node.properties) {
+        return text
+      }
+      text = ''
+      this.node.properties.conditions[0].forEach(cond => {
+        var temp = ''
+        temp += cond.paramLabel
+        switch (cond.key) {
+          case 'lt':
+            temp += '<' + cond.upperBound
+            break
+          case 'le':
+            temp += '≤' + cond.upperBoundEqual
+            break
+          case 'eq':
+            temp += '=' + cond.boundEqual
+            break
+          case 'gt':
+            temp += '>' + cond.lowerBound
+            break
+          case 'ge':
+            temp += '≥' + cond.lowerBoundEqual
+            break
+          case 'between':
+            temp = ''
+            if (cond.lowerBound && cond.lowerBound !== '') {
+              temp = cond.lowerBound + '<'
+            } else {
+              temp = cond.lowerBoundEqual + '≤'
+            }
+            temp += cond.paramLabel
+            if (cond.upperBound && cond.upperBound !== '') {
+              temp += '<' + cond.upperBound
+            } else {
+              temp += '≤' + cond.upperBoundEqual
+            }
+            break
+          default:
+        }
+        temp += ' 且 '
+        text += temp
+      })
+      text = text.substring(0, text.length - 2)
+      return text
     }
   }
 }

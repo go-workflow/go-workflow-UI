@@ -1,9 +1,54 @@
+// 输入流程数据json对象data
+export const checkData = (data) => {
+  var errors = []
+  var arr = []
+  arr.push(data)
+  while (arr.length > 0) {
+    var temp = arr.pop()
+    // 判断节点是否有效
+    switch (temp.type) {
+      case 'start':
+        break
+      case 'approver' || 'notifier':
+        if (!temp.properties) {
+          errors.push({
+            name: temp.name,
+            nodeId: temp.nodeId
+          })
+        }
+        break
+      case 'notifier':
+        if (!temp.properties) {
+          errors.push({
+            name: temp.name,
+            nodeId: temp.nodeId
+          })
+        }
+        break
+      case 'route':
+        temp.conditionNodes.forEach(c => {
+          if (!c.properties || c.properties.conditions.length === 0 || c.properties.conditions[0].length === 0) {
+            errors.push({
+              name: c.name,
+              nodeId: c.nodeId
+            })
+          }
+        })
+        break
+      default:
+    }
+    // 判断节点是否有子节点
+    if (temp.childNode != null) {
+      arr.push(temp.childNode)
+    }
+  }
+  return errors
+}
 export const iteratorData = (resultArr, data) => {
   var arr = []
   arr.push(data)
   while (arr.length > 0) {
     var temp = arr.pop()
-    console.log(temp)
     if (temp.type === 'route') {
       resultArr.push(temp)
     } else {
