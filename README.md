@@ -8,7 +8,7 @@
 
 1、首先通过npm安装： npm install workflow-ui --save
 
-2、全局定义组件：
+2、全局定义组件(否则会报循环引用)：
 
 main.js中
 
@@ -56,3 +56,27 @@ export default {
 }
 </script>
 ```
+
+## 源码 https://github.com/go-workflow/go-workflow-UI
+
+下载: git clone git@github.com:go-workflow/go-workflow-UI.git
+
+### 测试
+
+首先，打开vue.config.js,修改entry为main.js,否则页面将会是空白：
+
+```
+entry: 'src/main.js'
+```
+
+### 作者
+
+邮箱：181457121@qq.com
+
+
+
+
+
+
+
+
