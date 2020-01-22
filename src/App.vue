@@ -1,21 +1,32 @@
 <template>
   <div id="app">
-    <Main :data="data" />
+    <Main
+      :data.sync="data"
+      @ok="ok"
+    />
   </div>
 </template>
 
 <script>
-import Main from './components/Main.vue'
-// import styleview from './components/Styleview'
+import Main from './components/Generator/Main'
 export default {
   name: 'App',
   components: {
     Main
-    // styleview
+  },
+  props: {
+    data: {
+      type: Object,
+      default: undefined
+    }
   },
   data () {
     return {
-      data: undefined
+    }
+  },
+  methods: {
+    ok (data) {
+      this.$emit('update:data', data)
     }
   }
 }

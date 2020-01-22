@@ -180,7 +180,13 @@ export default {
       { label: '会签（须所有审批人同意）', value: 'and', color: 'green' }
     ],
     properties1: {
-      actionerRules: [{}]
+      actionerRules: [{
+        type: 'target_management',
+        level: 1,
+        isEmpty: false,
+        autoUp: true,
+        actType: 'or'
+      }]
     }
   }),
   watch: {
@@ -192,9 +198,9 @@ export default {
     }
   },
   mounted () {
-    Object.assign(this.temp, this.properties)
     this.properties1 = this.properties
     this.init()
+    Object.assign(this.temp, this.properties1)
   },
   methods: {
     init () {

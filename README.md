@@ -1,29 +1,58 @@
-# workflow
+# workflow-ui 前端工作流 UI
 
-## Project setup
-```
-npm install
-```
+基于vue前端工作流UI
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## 前端工作流生成器-Generator
 
-### Compiles and minifies for production
-```
-npm run build
-```
+<img src="./doc/img/workflow-ui.png"/>
 
-### Run your tests
+1、首先通过npm安装： npm install workflow-ui --save
+
+2、全局定义组件：
+
+main.js中
+
 ```
-npm run test
+import Node from 'workflow-ui/src/components/Generator/node'
+Vue.component('Node', Node)
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
+3、在使用的地方：
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+```
+<template>
+  <div>
+    <workflow
+      :data="data"
+      @ok="ok"
+    />
+  </div>
+</template>
+<script>
+import workflow from 'workflow-ui/src/components/Generator'
+import 'workflow-ui/lib/workflow-ui.css'
+export default {
+  components: {
+    workflow
+  },
+  data () {
+    return {
+      data: {
+        title: '请假',
+        node: {
+          name: '发起人',
+          type: 'start',
+          nodeId: 'sid-startevent',
+          childNode: {}
+        }
+      }
+    }
+  },
+  methods: {
+    ok (data) {
+      console.log(data)
+    }
+  }
+}
+</script>
+```

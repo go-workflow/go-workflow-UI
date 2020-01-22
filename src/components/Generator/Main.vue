@@ -39,7 +39,7 @@
         </button>
         <button
           type="button"
-          class="ant-btn button-publish"
+          class="ant-btn button-preview"
           @click="save"
         >
           <span>发 布</span>
@@ -87,10 +87,10 @@
   </div>
 </template>
 <script>
-import AModal from './AModal/AModal'
-import EndNode from './procdef/end-node'
-import ErrorsModal from './procdef/errors-modal'
-import { iteratorData, addNewNode, delNode, checkData } from './procdef/process'
+import AModal from './../AModal/AModal'
+import EndNode from './end-node'
+import ErrorsModal from './errors-modal'
+import { iteratorData, addNewNode, delNode, checkData } from './process'
 export default {
   name: 'WorkflowUi',
   components: {
@@ -128,6 +128,10 @@ export default {
     }
   },
   mounted () {
+    if (this.data && this.data.node) {
+      this.data1 = this.data
+    }
+    console.log(this.data1)
     if (!this.data1.node) {
       this.initialNode()
     }
@@ -135,7 +139,7 @@ export default {
   },
   methods: {
     initialNode () {
-      this.data1.node1 = {
+      this.data1.node = {
         name: '发起人',
         type: 'start',
         nodeId: 'sid-startevent'
@@ -158,8 +162,7 @@ export default {
         this.errors = errors
         return
       }
-      console.log(this.data1)
-      this.$emit('save', this.data1)
+      this.$emit('ok', this.data1)
     },
     preview () {
       var errors = checkData(this.data1.node)

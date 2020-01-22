@@ -142,6 +142,7 @@ button {
   white-space: nowrap;
   text-overflow: ellipsis;
   border-bottom: 1px dashed transparent;
+  font-size: 0.7em;
 }
 .editable-title:before {
   content: "";

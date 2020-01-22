@@ -73,12 +73,6 @@ export default {
   watch: {
     dialog (val) {
       this.dialog1 = val
-      if (val) {
-        console.log(document.documentElement.clientHeight)
-        console.log(document.documentElement.scrollHeight)
-        console.log(document.body.scrollHeight)
-        console.log(window.innerHeight)
-      }
     }
   },
   methods: {

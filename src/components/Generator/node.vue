@@ -26,7 +26,7 @@ import NodeWrap from './node-wrap'
 import ConditionNode from './condition-node'
 import BranchWrap from './branch-wrap'
 export default {
-  name: 'ProcessNode',
+  name: 'Node',
   components: {
     NodeWrap,
     BranchWrap,
