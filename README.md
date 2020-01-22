@@ -69,6 +69,10 @@ export default {
 entry: 'src/main.js'
 ```
 
+npm i
+
+npm run serve
+
 ### 作者
 
 邮箱：181457121@qq.com
